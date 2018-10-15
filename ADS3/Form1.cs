@@ -31,20 +31,15 @@ namespace ADS3
             textBox1.ReadOnly = false;
             label2.Visible = true;
             label3.Visible = true;
-            for(int i = 0; i < ex; i++)
-            {
-                for(int j = 0; j < job; j++)
-                {
-                    dataGridView1.Rows[i].Cells[j].Value = null;
-                }
-            }
-            for (int i = 0; i < ex; i++)
+            for (int i = 0; i < job; i++)
             {
                 for (int j = 0; j < job; j++)
                 {
                     dataGridView1.Rows[i].Cells[j].Value = null;
                 }
             }
+            dataGridView1.Rows.Clear();
+                dataGridView1.Columns.Clear();
             dataGridView1.Visible = false;
             label4.Visible = false;
             button5.Visible = false;
@@ -218,7 +213,7 @@ namespace ADS3
                     Done.Add(s);
                 }
             }
-            FileStream f = new FileStream("temp.txt",FileMode.OpenOrCreate);
+            FileStream f = new FileStream("temp2.txt", FileMode.OpenOrCreate);
             StreamWriter w = new StreamWriter(f);
             foreach (string s in Emp)
             {
@@ -226,14 +221,15 @@ namespace ADS3
                 {
                     for (int i = 0; i < s.Length - 1; i++)
                         w.Write("{0,3}", s[i]);
-                   w.WriteLine("{0,3}", s[s.Length - 1]);
+                    w.WriteLine("{0,3}", s[s.Length - 1]);
                 }
             }
             w.Close();
             f.Close();
-            StreamReader r = new StreamReader("temp.txt");
+            StreamReader r = new StreamReader("temp2.txt");
             MessageBox.Show(r.ReadToEnd());
             r.Close();
+            File.Delete("temp2.txt");
             File.Delete("temp.txt");
         }
         static void Fill(ref List<Class1> main, string name, int c)
