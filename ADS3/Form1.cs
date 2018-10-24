@@ -188,22 +188,24 @@ namespace ADS3
             List<int> shouldBeD = new List<int>();
             while (Done.Count < main.Count)
             {
+                bool[] ok = new bool[countEmp];
                 int t = 0;
                 List<string> doneInThisStep = new List<string>();
-                if (shouldBeD.Count != 0) //если есть те которые надо сделать, то делает
+                if (shouldBeD.Count != 0) //если есть те которые надо сделать, то делает 
                 {
                     for (int i = 0; i < shouldBeD.Count; i++)
                     {
                         if (t >= countEmp) break;
-                        if (main[shouldBeD[i]].Can(Done) == false) { Emp[t++] += main[shouldBeD[i]].th; doneInThisStep.Add(main[shouldBeD[i]].th); shouldBeD.RemoveAt(i); }
+                        if (main[shouldBeD[i]].Can(Done) == false) { ok[t] = true; Emp[t++] += main[shouldBeD[i]].th; doneInThisStep.Add(main[shouldBeD[i]].th); shouldBeD.RemoveAt(i); }
                     }
                 }
-                if (t < countEmp) //заняты ли все рабочие
+                if (t < countEmp) //заняты ли все рабочие 
                     for (int j = t; j < countEmp && stop < main.Count; j++)
                     {
                         while (stop < main.Count && main[stop].Can(Done)) shouldBeD.Add(stop++);
                         if (stop != main.Count)
                         {
+                            ok[j] = true;
                             Emp[j] += main[stop].th;
                             doneInThisStep.Add(main[stop++].th);
                         }
@@ -211,6 +213,10 @@ namespace ADS3
                 foreach (string s in doneInThisStep)
                 {
                     Done.Add(s);
+                }
+                for (int i = 0; i < countEmp; i++)
+                {
+                    if (ok[i] == false) Emp[i] += " ";
                 }
             }
             FileStream f = new FileStream("temp2.txt", FileMode.OpenOrCreate);
@@ -345,22 +351,24 @@ namespace ADS3
             List<int> shouldBeD = new List<int>();
             while (Done.Count < main.Count)
             {
+                bool[] ok = new bool[countEmp];
                 int t = 0;
                 List<string> doneInThisStep = new List<string>();
-                if (shouldBeD.Count != 0) //если есть те которые надо сделать, то делает
+                if (shouldBeD.Count != 0) //если есть те которые надо сделать, то делает 
                 {
                     for (int i = 0; i < shouldBeD.Count; i++)
                     {
                         if (t >= countEmp) break;
-                        if (main[shouldBeD[i]].Can(Done) == false) { Emp[t++] += main[shouldBeD[i]].th; doneInThisStep.Add(main[shouldBeD[i]].th); shouldBeD.RemoveAt(i); }
+                        if (main[shouldBeD[i]].Can(Done) == false) { ok[t] = true; Emp[t++] += main[shouldBeD[i]].th; doneInThisStep.Add(main[shouldBeD[i]].th); shouldBeD.RemoveAt(i); }
                     }
                 }
-                if (t < countEmp) //заняты ли все рабочие
+                if (t < countEmp) //заняты ли все рабочие 
                     for (int j = t; j < countEmp && stop < main.Count; j++)
                     {
                         while (stop < main.Count && main[stop].Can(Done)) shouldBeD.Add(stop++);
                         if (stop != main.Count)
                         {
+                            ok[j] = true;
                             Emp[j] += main[stop].th;
                             doneInThisStep.Add(main[stop++].th);
                         }
@@ -368,6 +376,10 @@ namespace ADS3
                 foreach (string s in doneInThisStep)
                 {
                     Done.Add(s);
+                }
+                for (int i = 0; i < countEmp; i++)
+                {
+                    if (ok[i] == false) Emp[i] += " ";
                 }
             }
             FileStream f = new FileStream("temp2.txt", FileMode.OpenOrCreate);
